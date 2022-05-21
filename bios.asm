@@ -1,0 +1,43 @@
+mov 0x1 1 ; Loads stage 2(mapped to page 4) into memory then jumps to it
+mov 0x2 0xFF
+mov 0x3 2
+mov 0x4 0xFF
+mov 0x5 3
+mov 0x6 0xFF
+mov 0x7 4
+mov 0x8 0xFF
+mov 0x9 5
+mov 0xA 0xFF
+mov 0xB 6
+mov 0xC 0xFF
+
+reg CS 0x0
+epge
+
+mov 1:0xD1 0 ; Load at addr
+mov 1:0xD2 0 ; Load from addr
+mov 1:0xD3 0 ; Checking addr
+
+loop: ; Load next byte
+
+mov A 1:0xD2
+mov A [4:A]
+reg B 0xAA
+sub
+jz @0:end
+
+
+mov A 1:0xD1
+mov B 1:0xD2
+mov [2:A] [4:B]
+reg B 1
+add
+mov 1:0xD1 A
+
+mov A 1:0xD2
+add
+mov 1:0xD2 A
+jmp @0:loop
+
+end:
+jmp 2:0 ; Jump to stage 2
