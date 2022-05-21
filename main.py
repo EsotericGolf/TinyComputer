@@ -14,17 +14,17 @@ buf = [0] * 32
 
 # Called when an address in the mapping is accessed
 def IO(ram, write, address, byte):
-  global buf
+    global buf
 
-  if not write:
-    return buf[address - 255]
+    if not write:
+        return buf[address - 255]
     
-  buf[address - 255] = byte
+    buf[address - 255] = byte
 
-  os.system("clear")
+    os.system("clear")
 
-  for ch in buf:
-    print(chr(ch), end="", flush=True)
+    for ch in buf:
+        print(chr(ch), end="", flush=True)
 
 # Mapped to page 1
 com.ram.map(MemoryRange(255, 255 + 0x20), IO)
